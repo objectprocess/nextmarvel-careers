@@ -933,7 +933,7 @@
                 const formData = new FormData();
                 formData.append('file', file);
                 formData.append('upload_preset', CLOUDINARY_CONFIG.UPLOAD_PRESET);
-                formData.append('resource_type', 'raw'); // Specify raw for documents/PDFs
+                formData.append('resource_type', 'auto'); // auto for anything
                 
                 console.log('📤 Uploading to Cloudinary...');
                 
