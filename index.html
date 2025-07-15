@@ -300,4 +300,612 @@
             padding-left: 20px;
         }
 
-        .job-des
+        .job-description li {
+            margin-bottom: 8px;
+        }
+
+        .apply-button {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #4a5568;
+            color: white;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: all 0.2s ease;
+        }
+
+        .apply-button:hover {
+            background: #2d3748;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Application Form */
+        .application-section {
+            display: none;
+            padding: 32px 0;
+        }
+
+        .application-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 32px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .autofill-section {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .autofill-text {
+            color: #4a5568;
+            font-size: 14px;
+        }
+
+        .upload-btn {
+            background: white;
+            border: 1px solid #e2e8f0;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .upload-btn:hover {
+            border-color: #667eea;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+
+        .form-label.required::after {
+            content: "*";
+            color: #e53e3e;
+            margin-left: 4px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-input.error {
+            border-color: #e53e3e;
+        }
+
+        .error-message {
+            color: #e53e3e;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .file-upload-area {
+            border: 2px dashed #e2e8f0;
+            border-radius: 8px;
+            padding: 40px 20px;
+            text-align: center;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .file-upload-area:hover {
+            border-color: #667eea;
+            background: #f8fafc;
+        }
+
+        .file-upload-area.dragover {
+            border-color: #667eea;
+            background: #ebf4ff;
+        }
+
+        .submit-form-btn {
+            width: 100%;
+            background: #4a5568;
+            color: white;
+            padding: 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 24px;
+        }
+
+        .submit-form-btn:hover {
+            background: #2d3748;
+        }
+
+        .submit-form-btn:disabled {
+            background: #a0aec0;
+            cursor: not-allowed;
+        }
+
+        /* Success Page */
+        .success-page {
+            display: none;
+            text-align: center;
+            padding: 80px 0;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: #48bb78;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            font-size: 32px;
+            color: white;
+        }
+
+        .success-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 16px;
+        }
+
+        .success-message {
+            font-size: 18px;
+            color: #718096;
+            margin-bottom: 32px;
+        }
+
+        .back-home-btn {
+            background: #667eea;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.2s ease;
+        }
+
+        .back-home-btn:hover {
+            background: #5a67d8;
+        }
+
+        /* Admin Dashboard - Hidden by default */
+        .admin-dashboard {
+            display: none;
+            background: white;
+            border-radius: 12px;
+            padding: 32px;
+            margin: 40px 0;
+            border: 1px solid #e2e8f0;
+        }
+
+        .admin-dashboard.show {
+            display: block;
+        }
+
+        .admin-toggle {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: #2d3748;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .admin-toggle:hover {
+            background: #1a202c;
+        }
+
+        .admin-header {
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 16px;
+            margin-bottom: 24px;
+        }
+
+        .admin-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .application-item {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 16px;
+            background: #f8fafc;
+        }
+
+        .application-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .applicant-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .application-date {
+            color: #718096;
+            font-size: 14px;
+        }
+
+        .application-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            font-size: 14px;
+            color: #4a5568;
+        }
+
+        @media (max-width: 768px) {
+            .job-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .jobs-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-title {
+                font-size: 36px;
+            }
+            
+            .apply-button {
+                position: static;
+                width: 100%;
+                margin-top: 24px;
+                border-radius: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <button class="back-arrow" id="backArrow">←</button>
+                <a href="#" class="logo" id="logoLink">
+                    <div class="logo-icon">
+                        <img src="https://media.licdn.com/dms/image/v2/D560BAQFACW1mpJN9Vw/company-logo_100_100/company-logo_100_100/0/1733214511519/vooglamglasses_logo?e=1755734400&v=beta&t=0PeZVWG5jeGDf7TpZltAZEmgDXKrGW2HEbQP675_IGY" 
+                             alt="Next Marvel Inc Logo"
+                             onerror="this.style.display='none'; this.parentElement.innerHTML='&gt;&gt;';">
+                    </div>
+                    <span>Next Marvel Inc</span>
+                </a>
+                <div></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Home Page -->
+        <div class="home-page" id="homePage">
+            <!-- Hero Section -->
+            <section class="hero-section">
+                <h1 class="hero-title">Join Next Marvel Inc</h1>
+                <p class="hero-subtitle">Help us revolutionize the eyewear industry. We're creating innovative eyewear solutions that combine cutting-edge technology with exceptional design to enhance how people see and experience the world.</p>
+            </section>
+
+            <!-- Filters Section -->
+            <section class="filters-section">
+                <div class="filters">
+                    <div class="filter-group">
+                        <label class="filter-label">Department</label>
+                        <select class="filter-select" id="departmentFilter">
+                            <option value="">All Departments</option>
+                            <option value="Engineering">Engineering</option>
+                            <option value="Product">Product</option>
+                            <option value="Design">Design</option>
+                            <option value="Research">Research</option>
+                            <option value="Marketing">Marketing</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Employment Type</label>
+                        <select class="filter-select" id="employmentFilter">
+                            <option value="">All Types</option>
+                            <option value="Full-time">Full-time</option>
+                            <option value="Part-time">Part-time</option>
+                            <option value="Contract">Contract</option>
+                            <option value="Intern">Intern</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Jobs Section -->
+            <section class="jobs-section">
+                <div class="jobs-grid" id="jobsGrid"></div>
+            </section>
+        </div>
+
+        <!-- Job Page -->
+        <div class="job-page" id="jobPage">
+            <div class="job-content">
+                <aside class="job-sidebar">
+                    <div class="job-sidebar-item">
+                        <div class="job-sidebar-label">Location</div>
+                        <div class="job-sidebar-value" id="jobLocation"></div>
+                    </div>
+                    <div class="job-sidebar-item">
+                        <div class="job-sidebar-label">Employment Type</div>
+                        <div class="job-sidebar-value" id="jobEmploymentType"></div>
+                    </div>
+                    <div class="job-sidebar-item">
+                        <div class="job-sidebar-label">Location Type</div>
+                        <div class="job-sidebar-value" id="jobLocationType"></div>
+                    </div>
+                    <div class="job-sidebar-item">
+                        <div class="job-sidebar-label">Department</div>
+                        <div class="job-sidebar-value" id="jobDepartment"></div>
+                    </div>
+                </aside>
+
+                <main class="job-main">
+                    <div class="job-header">
+                        <h1 id="jobTitle"></h1>
+                        <div class="job-tabs">
+                            <div class="job-tab active" data-tab="overview">Overview</div>
+                            <div class="job-tab" data-tab="application">Application</div>
+                        </div>
+                    </div>
+
+                    <div class="job-tab-content" id="overviewContent">
+                        <div class="job-description" id="jobDescription"></div>
+                    </div>
+
+                    <div class="job-tab-content application-section" id="applicationContent">
+                        <div class="application-form">
+                            <div class="autofill-section">
+                                <div>
+                                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                                        <span>🪄</span>
+                                        <strong>Autofill from resume</strong>
+                                    </div>
+                                    <div class="autofill-text">Upload your resume here to autofill key application fields.</div>
+                                </div>
+                                <button class="upload-btn" id="autofillBtn">Upload file</button>
+                            </div>
+
+                            <form id="applicationForm">
+                                <div class="form-group">
+                                    <label class="form-label required">Name</label>
+                                    <input type="text" class="form-input" id="applicantName" placeholder="Type here..." required>
+                                    <div class="error-message" id="nameError"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label required">Email</label>
+                                    <input type="email" class="form-input" id="applicantEmail" placeholder="hello@example.com..." required>
+                                    <div class="error-message" id="emailError"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label required">Resume</label>
+                                    <div class="file-upload-area" id="resumeUpload">
+                                        <div>📎 Upload File or drag and drop here</div>
+                                        <input type="file" id="resumeFile" accept=".pdf,.doc,.docx" style="display: none;" required>
+                                    </div>
+                                    <div class="error-message" id="resumeError"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label required">Location</label>
+                                    <input type="text" class="form-input" id="applicantLocation" placeholder="City, Country" required>
+                                    <div class="error-message" id="locationError"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Phone Number</label>
+                                    <input type="tel" class="form-input" id="applicantPhone" placeholder="+1 (555) 123-4567">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Cover Letter</label>
+                                    <textarea class="form-input" id="coverLetter" rows="6" placeholder="Tell us why you're interested in this position..."></textarea>
+                                </div>
+
+                                <button type="submit" class="submit-form-btn" id="submitBtn">Submit Application</button>
+                            </form>
+                        </div>
+                    </div>
+                </main>
+            </div>
+
+            <button class="apply-button" id="applyButton">Apply for this Job</button>
+        </div>
+
+        <!-- Success Page -->
+        <div class="success-page" id="successPage">
+            <div class="success-icon">✓</div>
+            <h1 class="success-title">Application Submitted!</h1>
+            <p class="success-message">Thank you for your application. We'll review it and get back to you soon.</p>
+            <a href="#" class="back-home-btn" id="backHomeBtn">Back to Jobs</a>
+        </div>
+
+        <!-- Admin Dashboard - Hidden from users -->
+        <div class="admin-dashboard" id="adminDashboard">
+            <div class="admin-header">
+                <h2 class="admin-title">📊 Application Dashboard</h2>
+            </div>
+            <div id="applicationsList">
+                <p style="text-align: center; color: #718096; padding: 40px;">No applications received yet.</p>
+            </div>
+        </div>
+
+        <!-- Admin Toggle (remove this line for production) -->
+        <!-- <button class="admin-toggle" id="adminToggle" onclick="toggleAdmin()">Admin</button> -->
+    </div>
+
+    <script>
+        // Google Services Configuration
+        const GOOGLE_CONFIG = {
+            // Google Apps Script Web App URL
+            WEB_APP_URL: 'https://script.google.com/macros/s/AKfycbwazXsAI5k3v8BUUnjUtJnDsqV1R5BxDMTPSrq94_04Lm2UqGJMymvqapRRAPHZ_hiU/exec',
+            
+            // Google Drive folder for resumes (you'll need to set this up)
+            DRIVE_FOLDER_ID: 'YOUR_GOOGLE_DRIVE_FOLDER_ID_HERE'
+        };
+
+        // Job data
+        const jobsData = [
+            {
+                id: 1,
+                title: "Senior Frontend Developer",
+                department: "Engineering",
+                location: "San Francisco, CA, New York, NY, Remote",
+                employmentType: "Full-time",
+                locationType: "Hybrid",
+                description: `
+                    <h3>Who are we?</h3>
+                    <p>Our mission is to revolutionize the eyewear industry through innovative design, advanced materials, and cutting-edge technology. Join our engineering team to build the digital experiences that connect customers with their perfect eyewear solutions.</p>
+                    
+                    <h3>What you'll do:</h3>
+                    <ul>
+                        <li>Build responsive web applications for eyewear customization and virtual try-on experiences</li>
+                        <li>Develop AR/VR features for virtual frame fitting</li>
+                        <li>Create intuitive user interfaces for lens prescription and customization tools</li>
+                        <li>Collaborate with designers and opticians to translate complex eyewear concepts into digital experiences</li>
+                        <li>Optimize performance for 3D rendering and real-time frame visualization</li>
+                    </ul>
+                    
+                    <h3>What we're looking for:</h3>
+                    <ul>
+                        <li>5+ years of frontend development experience</li>
+                        <li>Expertise in React, TypeScript, and modern web technologies</li>
+                        <li>Experience with 3D graphics (Three.js, WebGL) preferred</li>
+                        <li>Knowledge of AR/VR technologies is a plus</li>
+                    </ul>
+                `
+            },
+            {
+                id: 2,
+                title: "Product Designer",
+                department: "Design",
+                location: "Los Angeles, CA",
+                employmentType: "Full-time",
+                locationType: "Hybrid",
+                description: `
+                    <h3>Shape the future of eyewear design:</h3>
+                    <p>Join our design team to create beautiful, functional eyewear products that combine style with cutting-edge technology. You'll work on everything from frame design to digital user experiences.</p>
+                    
+                    <h3>What you'll do:</h3>
+                    <ul>
+                        <li>Design innovative eyewear frames and accessories</li>
+                        <li>Create user experiences for virtual try-on and customization tools</li>
+                        <li>Collaborate with engineers and materials scientists</li>
+                        <li>Conduct user research with diverse demographics</li>
+                        <li>Develop design systems for consistent brand experience</li>
+                    </ul>
+                `
+            },
+            {
+                id: 3,
+                title: "Optical Engineer",
+                department: "Engineering",
+                location: "Austin, TX",
+                employmentType: "Full-time",
+                locationType: "On-site",
+                description: `
+                    <h3>Engineering the future of vision:</h3>
+                    <p>Work on advanced lens technologies, coatings, and optical systems that push the boundaries of what eyewear can achieve. Join our team developing next-generation vision solutions.</p>
+                    
+                    <h3>What you'll do:</h3>
+                    <ul>
+                        <li>Design and test advanced lens technologies</li>
+                        <li>Develop innovative coating and treatment processes</li>
+                        <li>Work on smart lens integration and photochromic technologies</li>
+                        <li>Collaborate with materials science team on new substrates</li>
+                        <li>Ensure optical quality and performance standards</li>
+                    </ul>
+                `
+            },
+            {
+                id: 4,
+                title: "Materials Scientist",
+                department: "Research",
+                location: "Boston, MA",
+                employmentType: "Full-time",
+                locationType: "On-site",
+                description: `
+                    <h3>Innovate sustainable eyewear materials:</h3>
+                    <p>Research and develop new materials for frames, lenses, and components that are both high-performance and environmentally sustainable.</p>
+                    
+                    <h3>What you'll do:</h3>
+                    <ul>
+                        <li>Research bio-based and recycled materials for frames</li>
+                        <li>Develop testing protocols for durability and safety</li>
+                        <li>Collaborate with suppliers on sustainable material sourcing</li>
+                        <li>Work on lightweight, strong composite materials</li>
+                        <li>Publish research and represent company at conferences</li>
+                    </ul>
+                `
+            },
+            {
+                id: 5,
+                title: "Digital Marketing Specialist",
+                department: "Marketing",
+                location: "Remote",
+                employmentType: "Full-time",
+                locationType: "Remote",
+                description: `
+                    <h3>Grow our eyewear brand:</h3>
+                    <p>Drive digital marketing initiatives that connect our innovative eyewear products with customers worldwide. Focus on performance marketing, social media, and brand storytelling.</p>
+                    
+                    <h3>What you'll do:</h3>
+                    <ul>
+                        <li>Manage paid advertising campaigns across multiple platforms</li>
+                        <li>Create content for social media and brand storytelling</li>
