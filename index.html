@@ -924,71 +924,79 @@
         let applications = JSON.parse(localStorage.getItem('applications')) || [];
         let currentJob = null;
 
-     / File upload to Cloudinary - FIXED for PDF viewing
-async function uploadFileToCloudinary(file, applicantName) {
-    try {
-        console.log('📤 Uploading file to Cloudinary:', file.name);
-        
-        // Create form data for Cloudinary upload
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('upload_preset', CLOUDINARY_CONFIG.UPLOAD_PRESET);
-        
-        // Add a public_id for better organization
-        const timestamp = Date.now();
-        const sanitizedName = applicantName.replace(/[^a-zA-Z0-9]/g, '_').toLowerCase();
-        formData.append('public_id', `job_applications/${sanitizedName}_${timestamp}`);
-        
-        console.log('📤 Uploading to Cloudinary...');
-        
-        // Use the standard upload endpoint (not /raw/)
-        const response = await fetch(
-            `https://api.cloudinary.com/v1_1/${CLOUDINARY_CONFIG.CLOUD_NAME}/upload`,
-            {
-                method: 'POST',
-                body: formData
+        // FIXED FILE UPLOAD TO CLOUDINARY
+        async function uploadFileToCloudinary(file, applicantName) {
+            try {
+                console.log('📤 Uploading file to Cloudinary:', file.name);
+                
+                // Create form data for Cloudinary upload
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('upload_preset', CLOUDINARY_CONFIG.UPLOAD_PRESET);
+                
+                // Add a public_id for better organization
+                const timestamp = Date.now();
+                const sanitizedName = applicantName.replace(/[^a-zA-Z0-9]/g, '_').toLowerCase();
+                formData.append('public_id', `job_applications/${sanitizedName}_${timestamp}`);
+                
+                console.log('📤 Uploading to Cloudinary...');
+                
+                // Use the standard upload endpoint (not /raw/)
+                const response = await fetch(
+                    `https://api.cloudinary.com/v1_1/${CLOUDINARY_CONFIG.CLOUD_NAME}/upload`,
+                    {
+                        method: 'POST',
+                        body: formData
+                    }
+                );
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log('✅ File uploaded successfully to Cloudinary');
+                    console.log('🔍 DEBUGGING CLOUDINARY RESPONSE:');
+                    console.log('📋 Full result:', result);
+                    console.log('🔗 secure_url:', result.secure_url);
+                    console.log('🔗 url:', result.url);
+                    console.log('📁 resource_type:', result.resource_type);
+                    console.log('📄 format:', result.format);
+                    console.log('🔑 public_id:', result.public_id);
+                    
+                    // Create multiple URL formats for reliability
+                    const baseUrl = result.secure_url;
+                    
+                    // Standard URL
+                    const standardUrl = baseUrl;
+                    
+                    // Force download URL
+                    const downloadUrl = baseUrl.replace('/upload/', '/upload/fl_attachment/');
+                    
+                    // Alternative download URL with filename
+                    const downloadUrlWithName = baseUrl.replace('/upload/', `/upload/fl_attachment:${file.name}/`);
+                    
+                    console.log('📄 Standard URL:', standardUrl);
+                    console.log('⬇️ Download URL:', downloadUrl);
+                    console.log('📎 Download URL with name:', downloadUrlWithName);
+                    
+                    return {
+                        url: downloadUrl, // Use download URL as primary
+                        standardUrl: standardUrl,
+                        downloadUrl: downloadUrl,
+                        downloadUrlWithName: downloadUrlWithName,
+                        publicId: result.public_id,
+                        originalUrl: result.secure_url
+                    };
+                } else {
+                    const errorText = await response.text();
+                    console.error('❌ Cloudinary upload failed:', response.status, errorText);
+                    return null;
+                }
+                
+            } catch (error) {
+                console.error('❌ Error uploading file to Cloudinary:', error);
+                return null;
             }
-        );
-        
-        if (response.ok) {
-            const result = await response.json();
-            console.log('✅ File uploaded successfully to Cloudinary:', result.secure_url);
-            
-            // Create a downloadable URL for PDFs and docs
-            let viewableUrl = result.secure_url;
-            
-            // For PDFs, modify the URL to make it viewable/downloadable
-            if (file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf')) {
-                // Add fl_attachment for download, or use the direct URL for viewing
-                viewableUrl = result.secure_url.replace('/upload/', '/upload/fl_attachment:resume/');
-                
-                // Alternative: Create both a view and download URL
-                const directViewUrl = result.secure_url;
-                const downloadUrl = result.secure_url.replace('/upload/', '/upload/fl_attachment:resume/');
-                
-                console.log('📄 PDF View URL:', directViewUrl);
-                console.log('⬇️ PDF Download URL:', downloadUrl);
-                
-                // Return the download URL as it's more reliable
-                viewableUrl = downloadUrl;
-            }
-            
-            return {
-                url: viewableUrl,
-                publicId: result.public_id,
-                originalUrl: result.secure_url // Keep original just in case
-            };
-        } else {
-            const errorText = await response.text();
-            console.error('❌ Cloudinary upload failed:', response.status, errorText);
-            return null;
         }
-        
-    } catch (error) {
-        console.error('❌ Error uploading file to Cloudinary:', error);
-        return null;
-    }
-}
+
         async function submitToGoogleSheets(applicationData) {
             try {
                 console.log('📤 Submitting to Google Sheets with data:', applicationData);
@@ -1360,20 +1368,6 @@ async function uploadFileToCloudinary(file, applicantName) {
             e.preventDefault();
             e.stopPropagation();
 
-            // FIRST: Check file immediately before any other processing
-            const resumeInput = document.getElementById('resumeFile');
-            console.log('🔍 IMMEDIATE FILE CHECK:');
-            console.log('🔍 Resume input element:', resumeInput);
-            console.log('🔍 Resume input files:', resumeInput ? resumeInput.files : 'input not found');
-            console.log('🔍 Files length:', resumeInput?.files?.length);
-            if (resumeInput?.files?.length > 0) {
-                console.log('🔍 File details:', {
-                    name: resumeInput.files[0].name,
-                    size: resumeInput.files[0].size,
-                    type: resumeInput.files[0].type
-                });
-            }
-
             if (!validateForm()) {
                 console.log('❌ Form validation failed');
                 return;
@@ -1396,12 +1390,16 @@ async function uploadFileToCloudinary(file, applicantName) {
                 const phone = document.getElementById('applicantPhone').value.trim();
                 const coverLetter = document.getElementById('coverLetter').value.trim();
 
-                // Handle file upload - USE GLOBAL FILE REFERENCE
+                // Handle file upload - USE GLOBAL FILE REFERENCE AND INPUT
                 let resumeUrl = 'No file uploaded';
                 let resumeFileName = 'No file';
+                let resumeUrlStandard = '';
+                let resumeUrlDownload = '';
+                let resumeUrlViewer = '';
+                
                 const resumeInput = document.getElementById('resumeFile');
                 
-                console.log('🔍 Checking for resume file AGAIN...');
+                console.log('🔍 Checking for resume file...');
                 console.log('🔍 Resume input element:', resumeInput);
                 console.log('🔍 Resume input files:', resumeInput ? resumeInput.files : 'input not found');
                 console.log('🔍 Files length:', resumeInput?.files?.length);
@@ -1431,26 +1429,25 @@ async function uploadFileToCloudinary(file, applicantName) {
                     console.log('📤 About to upload to Cloudinary...');
                     const uploadResult = await uploadFileToCloudinary(fileToUpload, name);
                     if (uploadResult && uploadResult.url) {
-                        resumeUrl = uploadResult.url;
-                        console.log('✅ Resume uploaded successfully to Cloudinary:', resumeUrl);
+                        // Store multiple URL formats
+                        resumeUrl = uploadResult.downloadUrl || uploadResult.url;
+                        resumeUrlStandard = uploadResult.standardUrl || uploadResult.originalUrl;
+                        resumeUrlDownload = uploadResult.downloadUrl;
+                        resumeUrlViewer = `https://drive.google.com/viewerng/viewer?url=${encodeURIComponent(resumeUrlDownload)}`;
+                        
+                        console.log('✅ Resume uploaded successfully to Cloudinary');
+                        console.log('📄 Standard URL:', resumeUrlStandard);
+                        console.log('⬇️ Download URL:', resumeUrlDownload);
+                        console.log('👁️ Viewer URL:', resumeUrlViewer);
                     } else {
                         console.log('⚠️ Resume upload failed');
                         resumeUrl = 'Upload failed';
                     }
                 } else {
                     console.log('📁 No resume file found');
-                    console.log('📁 Detailed analysis:');
-                    console.log('   - Resume input exists:', !!resumeInput);
-                    console.log('   - Files property exists:', !!resumeInput?.files);
-                    console.log('   - Files count:', resumeInput?.files?.length || 0);
-                    console.log('   - Global file exists:', !!window.selectedFile);
-                    
-                    // Try to get the file from the display area
-                    const uploadArea = document.getElementById('resumeUpload');
-                    console.log('📁 Upload area content:', uploadArea?.innerHTML);
                 }
 
-                // Prepare application data
+                // Prepare application data with multiple URL formats
                 const formData = {
                     id: Date.now(),
                     jobId: currentJob ? currentJob.id : 1,
@@ -1460,7 +1457,10 @@ async function uploadFileToCloudinary(file, applicantName) {
                     location: location,
                     phone: phone,
                     coverLetter: coverLetter,
-                    resumeUrl: resumeUrl,
+                    resumeUrl: resumeUrl, // Primary download URL
+                    resumeUrlStandard: resumeUrlStandard, // Standard Cloudinary URL
+                    resumeUrlDownload: resumeUrlDownload, // Download URL
+                    resumeUrlViewer: resumeUrlViewer, // Google Viewer URL
                     resumeFileName: resumeFileName,
                     submittedAt: new Date().toISOString(),
                     submittedAtFormatted: new Date().toLocaleDateString('en-US', {
@@ -1494,6 +1494,7 @@ async function uploadFileToCloudinary(file, applicantName) {
                     if (resumeUpload) {
                         resumeUpload.innerHTML = '<div>📎 Upload File or drag and drop here</div>';
                     }
+                    window.selectedFile = null;
                 } catch (resetError) {
                     console.log('Error resetting form:', resetError);
                 }
@@ -1551,7 +1552,7 @@ async function uploadFileToCloudinary(file, applicantName) {
                         <div><strong>Location:</strong> ${app.location}</div>
                         <div><strong>Phone:</strong> ${app.phone || 'Not provided'}</div>
                         <div><strong>Resume:</strong> ${app.resumeFileName}</div>
-                        <div><strong>Resume URL:</strong> <a href="${app.resumeUrl}" target="_blank">View File</a></div>
+                        <div><strong>Resume URL:</strong> <a href="${app.resumeUrl}" target="_blank">Download Resume</a></div>
                         ${app.coverLetter ? `<div style="grid-column: 1 / -1; margin-top: 8px;"><strong>Cover Letter:</strong><br>${app.coverLetter}</div>` : ''}
                     </div>
                 </div>
