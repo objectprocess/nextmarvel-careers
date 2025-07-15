@@ -737,8 +737,8 @@
                                     <label class="form-label required">Resume</label>
                                     <div class="file-upload-area" id="resumeUpload">
                                         <div>📎 Upload File or drag and drop here</div>
-                                        <input type="file" id="resumeFile" accept=".pdf,.doc,.docx" style="display: none;" required>
                                     </div>
+                                    <input type="file" id="resumeFile" accept=".pdf,.doc,.docx" style="display: none;" required>
                                     <div class="error-message" id="resumeError"></div>
                                 </div>
 
@@ -1170,6 +1170,9 @@
             const resumeUpload = document.getElementById('resumeUpload');
             const resumeFile = document.getElementById('resumeFile');
 
+            // Store file reference globally
+            window.selectedFile = null;
+
             resumeUpload.addEventListener('click', () => resumeFile.click());
 
             resumeUpload.addEventListener('dragover', function(e) {
@@ -1187,19 +1190,26 @@
                 this.classList.remove('dragover');
                 const files = e.dataTransfer.files;
                 if (files.length > 0) {
-                    // Manually set the files to the input
+                    // Store file globally AND in the input
+                    window.selectedFile = files[0];
+                    
+                    // Set files on the input element
                     const dt = new DataTransfer();
                     dt.items.add(files[0]);
                     resumeFile.files = dt.files;
+                    
                     updateFileDisplay(files[0]);
+                    console.log('📁 File dropped and stored:', files[0].name);
                 }
             });
 
             resumeFile.addEventListener('change', function() {
                 console.log('📁 File input changed, files:', this.files);
                 if (this.files.length > 0) {
+                    // Store file globally
+                    window.selectedFile = this.files[0];
                     updateFileDisplay(this.files[0]);
-                    console.log('📁 File selected:', this.files[0].name);
+                    console.log('📁 File selected and stored:', this.files[0].name);
                 }
             });
 
@@ -1362,28 +1372,40 @@
                 const phone = document.getElementById('applicantPhone').value.trim();
                 const coverLetter = document.getElementById('coverLetter').value.trim();
 
-                // Handle file upload - MOVED EARLIER AND ENHANCED
+                // Handle file upload - USE GLOBAL FILE REFERENCE
                 let resumeUrl = 'No file uploaded';
                 let resumeFileName = 'No file';
+                const resumeInput = document.getElementById('resumeFile');
                 
                 console.log('🔍 Checking for resume file AGAIN...');
                 console.log('🔍 Resume input element:', resumeInput);
                 console.log('🔍 Resume input files:', resumeInput ? resumeInput.files : 'input not found');
                 console.log('🔍 Files length:', resumeInput?.files?.length);
+                console.log('🔍 Global file reference:', window.selectedFile);
                 
+                // Try to get file from input first, then from global reference
+                let fileToUpload = null;
                 if (resumeInput && resumeInput.files && resumeInput.files.length > 0) {
+                    fileToUpload = resumeInput.files[0];
+                    console.log('📁 Using file from input element');
+                } else if (window.selectedFile) {
+                    fileToUpload = window.selectedFile;
+                    console.log('📁 Using file from global reference');
+                }
+                
+                if (fileToUpload) {
                     console.log('📁 Processing resume file...');
                     console.log('📁 File details:', {
-                        name: resumeInput.files[0].name,
-                        size: resumeInput.files[0].size,
-                        type: resumeInput.files[0].type
+                        name: fileToUpload.name,
+                        size: fileToUpload.size,
+                        type: fileToUpload.type
                     });
                     
                     if (submitBtn) submitBtn.textContent = 'Uploading resume...';
                     
-                    resumeFileName = resumeInput.files[0].name;
+                    resumeFileName = fileToUpload.name;
                     console.log('📤 About to upload to Cloudinary...');
-                    const uploadResult = await uploadFileToCloudinary(resumeInput.files[0], name);
+                    const uploadResult = await uploadFileToCloudinary(fileToUpload, name);
                     if (uploadResult && uploadResult.url) {
                         resumeUrl = uploadResult.url;
                         console.log('✅ Resume uploaded successfully to Cloudinary:', resumeUrl);
@@ -1397,6 +1419,7 @@
                     console.log('   - Resume input exists:', !!resumeInput);
                     console.log('   - Files property exists:', !!resumeInput?.files);
                     console.log('   - Files count:', resumeInput?.files?.length || 0);
+                    console.log('   - Global file exists:', !!window.selectedFile);
                     
                     // Try to get the file from the display area
                     const uploadArea = document.getElementById('resumeUpload');
