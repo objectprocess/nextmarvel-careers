@@ -924,45 +924,50 @@
         let applications = JSON.parse(localStorage.getItem('applications')) || [];
         let currentJob = null;
 
-        // File upload to Cloudinary
-        async function uploadFileToCloudinary(file, applicantName) {
-            try {
-                console.log('📤 Uploading file to Cloudinary:', file.name);
-                
-                // Create form data for Cloudinary upload
-                const formData = new FormData();
-                formData.append('file', file);
-                formData.append('upload_preset', CLOUDINARY_CONFIG.UPLOAD_PRESET);
-                formData.append('resource_type', 'auto'); // auto for anything
-                
-                console.log('📤 Uploading to Cloudinary...');
-                
-                const response = await fetch(
-                    `https://api.cloudinary.com/v1_1/${CLOUDINARY_CONFIG.CLOUD_NAME}/raw/upload`, // Use /raw/upload for documents
-                    {
-                        method: 'POST',
-                        body: formData
-                    }
-                );
-                
-                if (response.ok) {
-                    const result = await response.json();
-                    console.log('✅ File uploaded successfully to Cloudinary:', result.secure_url);
-                    return {
-                        url: result.secure_url,
-                        publicId: result.public_id
-                    };
-                } else {
-                    const errorText = await response.text();
-                    console.error('❌ Cloudinary upload failed:', response.status, errorText);
-                    return null;
-                }
-                
-            } catch (error) {
-                console.error('❌ Error uploading file to Cloudinary:', error);
-                return null;
+       // File upload to Cloudinary - FIXED VERSION
+async function uploadFileToCloudinary(file, applicantName) {
+    try {
+        console.log('📤 Uploading file to Cloudinary:', file.name);
+        
+        // Create form data for Cloudinary upload
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('upload_preset', CLOUDINARY_CONFIG.UPLOAD_PRESET);
+        formData.append('resource_type', 'auto'); // Changed from 'raw' to 'auto'
+        
+        // Add a public_id to make it easier to manage
+        const timestamp = Date.now();
+        const sanitizedName = applicantName.replace(/[^a-zA-Z0-9]/g, '_').toLowerCase();
+        formData.append('public_id', `resumes/${sanitizedName}_${timestamp}`);
+        
+        console.log('📤 Uploading to Cloudinary...');
+        
+        const response = await fetch(
+            `https://api.cloudinary.com/v1_1/${CLOUDINARY_CONFIG.CLOUD_NAME}/auto/upload`, // Changed to /auto/upload
+            {
+                method: 'POST',
+                body: formData
             }
+        );
+        
+        if (response.ok) {
+            const result = await response.json();
+            console.log('✅ File uploaded successfully to Cloudinary:', result.secure_url);
+            return {
+                url: result.secure_url,
+                publicId: result.public_id
+            };
+        } else {
+            const errorText = await response.text();
+            console.error('❌ Cloudinary upload failed:', response.status, errorText);
+            return null;
         }
+        
+    } catch (error) {
+        console.error('❌ Error uploading file to Cloudinary:', error);
+        return null;
+    }
+}
 
         async function submitToGoogleSheets(applicationData) {
             try {
