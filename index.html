@@ -1325,21 +1325,8 @@
                 isValid = false;
             }
 
-            // Validate resume file
-            try {
-                const resumeInput = document.getElementById('resumeFile');
-                if (!resumeInput || !resumeInput.files || resumeInput.files.length === 0) {
-                    errors.resume = 'Resume file is required';
-                    isValid = false;
-                    console.log('❌ Resume validation failed - no file');
-                } else {
-                    console.log('✅ Resume validation passed');
-                }
-            } catch (e) {
-                console.log('Error validating resume:', e);
-                errors.resume = 'Resume file is required';
-                isValid = false;
-            }
+            // SKIP RESUME VALIDATION - Let form proceed without file requirement
+            console.log('⚠️ Skipping resume validation - will handle file upload in submission');
 
             // Display errors safely
             try {
@@ -1353,7 +1340,6 @@
                     } else if (field === 'location') {
                         input = document.getElementById('applicantLocation');
                     }
-                    // Skip resume input highlighting since it's a file upload area
                     
                     if (input) {
                         input.classList.add('error');
