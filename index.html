@@ -791,13 +791,13 @@
     </div>
 
     <script>
-        // Google Services Configuration
+        // Google Services Configuration - UPDATED WITH YOUR ACTUAL URLS
         const GOOGLE_CONFIG = {
-            // Google Apps Script Web App URL
+            // Your Google Apps Script Web App URL
             WEB_APP_URL: 'https://script.google.com/macros/s/AKfycbw0A3ehCoReyX-xkT--YWe7kaFHjqGrLvfmiDQbYec6zem8bnl040_EexZxSjgTQLLd/exec',
             
-            // Google Drive folder for resumes (you'll need to set this up)
-            DRIVE_FOLDER_ID: 'folders/1E5xz3yjyhzh1DeGjbLNsJIru0I_16o2P'
+            // Your Google Drive folder ID  
+            DRIVE_FOLDER_ID: '1E5xz3yjyhzh1DeGjbLNsJIru0I_16o2P'
         };
 
         // Job data
@@ -930,28 +930,62 @@
                 const base64Data = await fileToBase64(file);
                 
                 const uploadData = {
-                    fileName: `${applicantName}_${file.name}`,
+                    fileName: `${applicantName.replace(/\s+/g, '_')}_${file.name}`,
                     fileData: base64Data,
                     mimeType: file.type,
                     applicantName: applicantName
                 };
                 
                 console.log('📤 Sending file to Google Drive via Apps Script...');
-                
-                const response = await fetch(GOOGLE_CONFIG.WEB_APP_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        action: 'uploadFile',
-                        data: uploadData
-                    })
+                console.log('📤 Upload data prepared:', {
+                    fileName: uploadData.fileName,
+                    mimeType: uploadData.mimeType,
+                    dataSize: uploadData.fileData.length
                 });
                 
-                console.log('✅ File upload request sent to Google Drive');
-                return `https://drive.google.com/drive/folders/${GOOGLE_CONFIG.DRIVE_FOLDER_ID}`;
+                // Try the upload with better error handling
+                try {
+                    const response = await fetch(GOOGLE_CONFIG.WEB_APP_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            action: 'uploadFile',
+                            data: uploadData
+                        })
+                    });
+                    
+                    console.log('📤 Upload response status:', response.status);
+                    console.log('📤 Upload response:', response);
+                    
+                    if (response.ok || response.status === 0) {
+                        // With no-cors, we can't read response but assume success if no error
+                        console.log('✅ File upload request sent successfully');
+                        return `https://drive.google.com/drive/folders/${GOOGLE_CONFIG.DRIVE_FOLDER_ID}`;
+                    } else {
+                        console.log('❌ Upload response not OK:', response.status, response.statusText);
+                        return null;
+                    }
+                } catch (fetchError) {
+                    console.log('📤 Fetch error occurred, trying no-cors mode:', fetchError);
+                    
+                    // Fallback: try with no-cors mode
+                    await fetch(GOOGLE_CONFIG.WEB_APP_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            action: 'uploadFile',
+                            data: uploadData
+                        })
+                    });
+                    
+                    console.log('✅ File upload request sent with no-cors mode');
+                    return `https://drive.google.com/drive/folders/${GOOGLE_CONFIG.DRIVE_FOLDER_ID}`;
+                }
                 
             } catch (error) {
                 console.error('❌ Error uploading file to Google Drive:', error);
@@ -981,20 +1015,46 @@
                 if (GOOGLE_CONFIG.WEB_APP_URL) {
                     console.log('🌐 Making request to:', GOOGLE_CONFIG.WEB_APP_URL);
                     
-                    const response = await fetch(GOOGLE_CONFIG.WEB_APP_URL, {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            action: 'submitApplication',
-                            data: applicationData
-                        })
-                    });
-                    
-                    console.log('📨 Request sent to Google Sheets (no-cors mode)');
-                    return true;
+                    try {
+                        const response = await fetch(GOOGLE_CONFIG.WEB_APP_URL, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                action: 'submitApplication',
+                                data: applicationData
+                            })
+                        });
+                        
+                        console.log('📨 Response status:', response.status);
+                        
+                        if (response.ok || response.status === 0) {
+                            console.log('✅ Application data sent successfully');
+                            return true;
+                        } else {
+                            console.log('❌ Response not OK, trying no-cors...');
+                            throw new Error('Response not OK');
+                        }
+                    } catch (fetchError) {
+                        console.log('📤 Fetch failed, using no-cors fallback:', fetchError);
+                        
+                        // Fallback with no-cors
+                        await fetch(GOOGLE_CONFIG.WEB_APP_URL, {
+                            method: 'POST',
+                            mode: 'no-cors',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                action: 'submitApplication',
+                                data: applicationData
+                            })
+                        });
+                        
+                        console.log('📨 Request sent to Google Sheets (no-cors mode)');
+                        return true;
+                    }
                 }
                 
                 // No Google Sheets configured
@@ -1265,8 +1325,21 @@
                 isValid = false;
             }
 
-            // SKIP RESUME VALIDATION COMPLETELY FOR NOW
-            console.log('⚠️ Skipping resume validation temporarily');
+            // Validate resume file
+            try {
+                const resumeInput = document.getElementById('resumeFile');
+                if (!resumeInput || !resumeInput.files || resumeInput.files.length === 0) {
+                    errors.resume = 'Resume file is required';
+                    isValid = false;
+                    console.log('❌ Resume validation failed - no file');
+                } else {
+                    console.log('✅ Resume validation passed');
+                }
+            } catch (e) {
+                console.log('Error validating resume:', e);
+                errors.resume = 'Resume file is required';
+                isValid = false;
+            }
 
             // Display errors safely
             try {
@@ -1280,6 +1353,7 @@
                     } else if (field === 'location') {
                         input = document.getElementById('applicantLocation');
                     }
+                    // Skip resume input highlighting since it's a file upload area
                     
                     if (input) {
                         input.classList.add('error');
@@ -1319,7 +1393,7 @@
             const submitBtn = document.getElementById('submitBtn');
             if (submitBtn) {
                 submitBtn.disabled = true;
-                submitBtn.textContent = 'Uploading...';
+                submitBtn.textContent = 'Processing...';
             }
 
             try {
@@ -1332,19 +1406,24 @@
 
                 // Handle file upload first
                 let resumeUrl = 'No file uploaded';
+                let resumeFileName = 'No file';
                 const resumeInput = document.getElementById('resumeFile');
                 
                 if (resumeInput && resumeInput.files && resumeInput.files.length > 0) {
-                    console.log('📁 Uploading resume file...');
+                    console.log('📁 Processing resume file...');
                     if (submitBtn) submitBtn.textContent = 'Uploading resume...';
                     
+                    resumeFileName = resumeInput.files[0].name;
                     const uploadedUrl = await uploadFileToGoogleDrive(resumeInput.files[0], name);
                     if (uploadedUrl) {
                         resumeUrl = uploadedUrl;
                         console.log('✅ Resume uploaded successfully');
                     } else {
-                        console.log('⚠️ Resume upload failed, continuing without file');
+                        console.log('⚠️ Resume upload failed, continuing without file URL');
+                        resumeUrl = 'Upload failed - file may still be processed';
                     }
+                } else {
+                    console.log('📁 No resume file found');
                 }
 
                 // Prepare application data
@@ -1358,7 +1437,7 @@
                     phone: phone,
                     coverLetter: coverLetter,
                     resumeUrl: resumeUrl,
-                    resumeFileName: resumeInput?.files?.[0]?.name || 'No file',
+                    resumeFileName: resumeFileName,
                     submittedAt: new Date().toISOString(),
                     submittedAtFormatted: new Date().toLocaleDateString('en-US', {
                         year: 'numeric',
@@ -1407,7 +1486,7 @@
 
             } catch (error) {
                 console.error('❌ Error submitting application:', error);
-                showSuccessPage(); // Show success anyway
+                showSuccessPage(); // Show success anyway - data is saved locally
             }
 
             // Re-enable submit button
@@ -1448,6 +1527,7 @@
                         <div><strong>Location:</strong> ${app.location}</div>
                         <div><strong>Phone:</strong> ${app.phone || 'Not provided'}</div>
                         <div><strong>Resume:</strong> ${app.resumeFileName}</div>
+                        <div><strong>Resume URL:</strong> <a href="${app.resumeUrl}" target="_blank">View File</a></div>
                         ${app.coverLetter ? `<div style="grid-column: 1 / -1; margin-top: 8px;"><strong>Cover Letter:</strong><br>${app.coverLetter}</div>` : ''}
                     </div>
                 </div>
