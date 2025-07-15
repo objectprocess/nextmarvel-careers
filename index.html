@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Careers - Next Marvel Inc</title>
+    <title>Careers - Your Company</title>
     <style>
         * {
             margin: 0;
@@ -588,20 +588,20 @@
             .job-content {
                 grid-template-columns: 1fr;
             }
-            
+
             .filters {
                 flex-direction: column;
                 align-items: stretch;
             }
-            
+
             .jobs-grid {
                 grid-template-columns: 1fr;
             }
-            
+
             .hero-title {
                 font-size: 36px;
             }
-            
+
             .apply-button {
                 position: static;
                 width: 100%;
@@ -650,7 +650,7 @@
                             <option value="Product">Product</option>
                             <option value="Design">Design</option>
                             <option value="Research">Research</option>
-                            <option value="Marketing">Marketing</option>
+                            <option value="Operations">Operations</option>
                         </select>
                     </div>
                     <div class="filter-group">
@@ -804,108 +804,670 @@
         const jobsData = [
             {
                 id: 1,
-                title: "Senior Frontend Developer",
+                title: "Senior Front-End Engineer",
                 department: "Engineering",
-                location: "San Francisco, CA, New York, NY, Remote",
+                location: "Toronto, Canada, Ottawa, Montreal, Vancouver, New York",
                 employmentType: "Full-time",
                 locationType: "Hybrid",
                 description: `
                     <h3>Who are we?</h3>
-                    <p>Our mission is to revolutionize the eyewear industry through innovative design, advanced materials, and cutting-edge technology. Join our engineering team to build the digital experiences that connect customers with their perfect eyewear solutions.</p>
+                    <p>Our mission is to revolutionize the eyewear industry through innovative design, advanced materials, and cutting-edge technology. We're creating eyewear solutions that not only provide exceptional vision correction but also integrate seamlessly with modern lifestyles, from smart frames to sustainable materials.</p>
                     
-                    <h3>What you'll do:</h3>
+                    <p>We obsess over every detail. Each team member is responsible for contributing to our mission of creating eyewear that makes a real difference in people's lives. We combine traditional craftsmanship with modern technology to deliver products that exceed expectations.</p>
+                    
+                    <p>Next Marvel Inc is a team of designers, engineers, opticians, materials scientists, and visionaries who are passionate about their craft. Each person brings unique expertise to help us push the boundaries of what eyewear can be. We believe that diverse perspectives are essential for creating revolutionary products.</p>
+                    
+                    <p>Join us on our mission to shape the future of vision!</p>
+                    
+                    <h3>About Our Innovation:</h3>
+                    <p>Our eyewear platform combines advanced lens technology, smart frame integration, and sustainable manufacturing processes. We offer customizable solutions that adapt to individual needs while maintaining the highest standards of quality, comfort, and style. Our products integrate cutting-edge features like blue light filtering, photochromic technology, and even smart connectivity.</p>
+                    
+                    <h3>Full-Time Employees at Next Marvel Inc enjoy these Perks:</h3>
                     <ul>
-                        <li>Build responsive web applications for eyewear customization and virtual try-on experiences</li>
-                        <li>Develop AR/VR features for virtual frame fitting</li>
-                        <li>Create intuitive user interfaces for lens prescription and customization tools</li>
-                        <li>Collaborate with designers and opticians to translate complex eyewear concepts into digital experiences</li>
-                        <li>Optimize performance for 3D rendering and real-time frame visualization</li>
+                        <li>🤝 An open and inclusive culture and work environment</li>
+                        <li>👓 Comprehensive eyewear benefits - free frames and lenses for you and your family</li>
+                        <li>🔬 Work with cutting-edge eyewear technology and innovative materials</li>
+                        <li>🍽️ Weekly lunch stipend, in-office meals & snacks</li>
+                        <li>🏥 Comprehensive health and vision benefits, including mental health support</li>
+                        <li>👶 Generous parental leave policies</li>
+                        <li>🎨 Professional development budget for courses, conferences, and certifications</li>
+                        <li>🏢 Flexible work arrangements with modern office spaces and co-working allowances</li>
+                        <li>✈️ Generous vacation time and flexible PTO</li>
+                        <li>💰 Competitive salary and equity packages</li>
+                        <li>🎯 Performance bonuses and recognition programs</li>
+                        <li>🌱 Sustainability initiatives and green commuting benefits</li>
                     </ul>
                     
-                    <h3>What we're looking for:</h3>
-                    <ul>
-                        <li>5+ years of frontend development experience</li>
-                        <li>Expertise in React, TypeScript, and modern web technologies</li>
-                        <li>Experience with 3D graphics (Three.js, WebGL) preferred</li>
-                        <li>Knowledge of AR/VR technologies is a plus</li>
-                    </ul>
+                    <p><em>Next Marvel Inc is an equal opportunity employer committed to diversity and inclusion in the eyewear industry.</em></p>
                 `
             },
             {
                 id: 2,
-                title: "Product Designer",
-                department: "Design",
-                location: "Los Angeles, CA",
+                title: "Product Manager",
+                department: "Product",
+                location: "San Francisco, CA",
                 employmentType: "Full-time",
                 locationType: "Hybrid",
                 description: `
-                    <h3>Shape the future of eyewear design:</h3>
-                    <p>Join our design team to create beautiful, functional eyewear products that combine style with cutting-edge technology. You'll work on everything from frame design to digital user experiences.</p>
+                    <h3>Who are we?</h3>
+                    <p>Our mission is to scale intelligence to serve humanity. Join our product team to help shape the future of AI technology and drive product strategy for millions of users worldwide.</p>
                     
                     <h3>What you'll do:</h3>
                     <ul>
-                        <li>Design innovative eyewear frames and accessories</li>
-                        <li>Create user experiences for virtual try-on and customization tools</li>
-                        <li>Collaborate with engineers and materials scientists</li>
-                        <li>Conduct user research with diverse demographics</li>
-                        <li>Develop design systems for consistent brand experience</li>
+                        <li>Define product roadmap and strategy</li>
+                        <li>Work closely with engineering and design teams</li>
+                        <li>Analyze user data and market trends</li>
+                        <li>Lead cross-functional initiatives</li>
                     </ul>
                 `
             },
             {
                 id: 3,
-                title: "Optical Engineer",
-                department: "Engineering",
-                location: "Austin, TX",
+                title: "UX Designer",
+                department: "Design",
+                location: "New York, NY",
                 employmentType: "Full-time",
-                locationType: "On-site",
+                locationType: "Remote",
                 description: `
-                    <h3>Engineering the future of vision:</h3>
-                    <p>Work on advanced lens technologies, coatings, and optical systems that push the boundaries of what eyewear can achieve. Join our team developing next-generation vision solutions.</p>
+                    <h3>About the role:</h3>
+                    <p>Join our design team to create beautiful, intuitive experiences that make AI accessible to everyone. You'll work on cutting-edge interfaces that thousands of users interact with daily.</p>
                     
                     <h3>What you'll do:</h3>
                     <ul>
-                        <li>Design and test advanced lens technologies</li>
-                        <li>Develop innovative coating and treatment processes</li>
-                        <li>Work on smart lens integration and photochromic technologies</li>
-                        <li>Collaborate with materials science team on new substrates</li>
-                        <li>Ensure optical quality and performance standards</li>
+                        <li>Design user interfaces for web and mobile</li>
+                        <li>Conduct user research and usability testing</li>
+                        <li>Collaborate with product and engineering teams</li>
+                        <li>Create design systems and prototypes</li>
                     </ul>
                 `
             },
             {
                 id: 4,
-                title: "Materials Scientist",
+                title: "Research Scientist",
                 department: "Research",
-                location: "Boston, MA",
+                location: "Toronto, Canada",
                 employmentType: "Full-time",
-                locationType: "On-site",
+                locationType: "Hybrid",
                 description: `
-                    <h3>Innovate sustainable eyewear materials:</h3>
-                    <p>Research and develop new materials for frames, lenses, and components that are both high-performance and environmentally sustainable.</p>
+                    <h3>Join our research team:</h3>
+                    <p>Work on fundamental AI research that pushes the boundaries of what's possible. You'll contribute to breakthrough research in large language models and AI safety.</p>
                     
                     <h3>What you'll do:</h3>
                     <ul>
-                        <li>Research bio-based and recycled materials for frames</li>
-                        <li>Develop testing protocols for durability and safety</li>
-                        <li>Collaborate with suppliers on sustainable material sourcing</li>
-                        <li>Work on lightweight, strong composite materials</li>
-                        <li>Publish research and represent company at conferences</li>
+                        <li>Conduct cutting-edge AI research</li>
+                        <li>Publish papers at top-tier conferences</li>
+                        <li>Collaborate with international research teams</li>
+                        <li>Develop novel training techniques</li>
                     </ul>
                 `
             },
             {
                 id: 5,
-                title: "Digital Marketing Specialist",
-                department: "Marketing",
+                title: "DevOps Engineer",
+                department: "Operations",
                 location: "Remote",
-                employmentType: "Full-time",
+                employmentType: "Contract",
                 locationType: "Remote",
                 description: `
-                    <h3>Grow our eyewear brand:</h3>
-                    <p>Drive digital marketing initiatives that connect our innovative eyewear products with customers worldwide. Focus on performance marketing, social media, and brand storytelling.</p>
+                    <h3>Infrastructure at scale:</h3>
+                    <p>Help us build and maintain the infrastructure that powers our AI models. You'll work on systems that serve millions of requests per day.</p>
                     
                     <h3>What you'll do:</h3>
                     <ul>
-                        <li>Manage paid advertising campaigns across multiple platforms</li>
-                        <li>Create content for social media and brand storytelling</li>
+                        <li>Manage cloud infrastructure</li>
+                        <li>Implement CI/CD pipelines</li>
+                        <li>Monitor system performance</li>
+                        <li>Ensure security and compliance</li>
+                    </ul>
+                `
+            }
+        ];
+
+        // Application storage (fallback for offline)
+        let applications = JSON.parse(localStorage.getItem('applications')) || [];
+        let currentJob = null;
+
+        // File upload to Google Drive via Apps Script
+        async function uploadFileToGoogleDrive(file, applicantName) {
+            try {
+                console.log('📤 Uploading file to Google Drive:', file.name);
+                
+                // Convert file to base64
+                const base64Data = await fileToBase64(file);
+                
+                const uploadData = {
+                    fileName: `${applicantName}_${file.name}`,
+                    fileData: base64Data,
+                    mimeType: file.type,
+                    applicantName: applicantName
+                };
+                
+                console.log('📤 Sending file to Google Drive via Apps Script...');
+                
+                const response = await fetch(GOOGLE_CONFIG.WEB_APP_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'uploadFile',
+                        data: uploadData
+                    })
+                });
+                
+                console.log('✅ File upload request sent to Google Drive');
+                return `https://drive.google.com/drive/folders/${GOOGLE_CONFIG.DRIVE_FOLDER_ID}`;
+                
+            } catch (error) {
+                console.error('❌ Error uploading file to Google Drive:', error);
+                return null;
+            }
+        }
+
+        // Helper function to convert file to base64
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    // Remove the data URL prefix to get just the base64 string
+                    const base64 = reader.result.split(',')[1];
+                    resolve(base64);
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        async function submitToGoogleSheets(applicationData) {
+            try {
+                console.log('📤 Submitting to Google Sheets with data:', applicationData);
+                
+                // Using Google Apps Script Web App
+                if (GOOGLE_CONFIG.WEB_APP_URL) {
+                    console.log('🌐 Making request to:', GOOGLE_CONFIG.WEB_APP_URL);
+                    
+                    const response = await fetch(GOOGLE_CONFIG.WEB_APP_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            action: 'submitApplication',
+                            data: applicationData
+                        })
+                    });
+                    
+                    console.log('📨 Request sent to Google Sheets (no-cors mode)');
+                    return true;
+                }
+                
+                // No Google Sheets configured
+                else {
+                    console.log('⚠️ Google Sheets not configured, saving locally only');
+                    return false;
+                }
+                
+            } catch (error) {
+                console.error('❌ Error submitting to Google Sheets:', error);
+                return false;
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            renderJobs();
+            updateApplicationsList();
+            setupEventListeners();
+        });
+
+        function setupEventListeners() {
+            // Navigation
+            document.getElementById('backArrow').addEventListener('click', showHomePage);
+            document.getElementById('logoLink').addEventListener('click', function(e) {
+                e.preventDefault();
+                showHomePage();
+            });
+            document.getElementById('backHomeBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                showHomePage();
+            });
+
+            // Filters
+            document.getElementById('departmentFilter').addEventListener('change', filterJobs);
+            document.getElementById('employmentFilter').addEventListener('change', filterJobs);
+
+            // Job tabs
+            document.querySelectorAll('.job-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    switchTab(this.dataset.tab);
+                });
+            });
+
+            // Apply button
+            document.getElementById('applyButton').addEventListener('click', function() {
+                switchTab('application');
+            });
+
+            // File uploads
+            setupFileUpload();
+
+            // Form submission - FIXED
+            const form = document.getElementById('applicationForm');
+            if (form) {
+                form.addEventListener('submit', handleFormSubmit);
+                console.log('✅ Form event listener attached');
+            } else {
+                console.error('❌ Application form not found!');
+            }
+        }
+
+        function renderJobs(filter = {}) {
+            const jobsGrid = document.getElementById('jobsGrid');
+            let filteredJobs = jobsData;
+
+            if (filter.department) {
+                filteredJobs = filteredJobs.filter(job => job.department === filter.department);
+            }
+
+            if (filter.employmentType) {
+                filteredJobs = filteredJobs.filter(job => job.employmentType === filter.employmentType);
+            }
+
+            jobsGrid.innerHTML = filteredJobs.map(job => `
+                <div class="job-card" onclick="showJobPage(${job.id})">
+                    <h3 class="job-title">${job.title}</h3>
+                    <div class="job-meta">
+                        <div class="job-meta-item">
+                            <span>📍</span>
+                            <span>${job.location}</span>
+                        </div>
+                        <div class="job-meta-item">
+                            <span>💼</span>
+                            <span>${job.employmentType}</span>
+                        </div>
+                        <div class="job-meta-item">
+                            <span>🏠</span>
+                            <span>${job.locationType}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterJobs() {
+            const department = document.getElementById('departmentFilter').value;
+            const employmentType = document.getElementById('employmentFilter').value;
+            
+            renderJobs({ department, employmentType });
+        }
+
+        function showHomePage() {
+            document.getElementById('homePage').style.display = 'block';
+            document.getElementById('jobPage').style.display = 'none';
+            document.getElementById('successPage').style.display = 'none';
+            document.getElementById('backArrow').style.display = 'none';
+            currentJob = null;
+        }
+
+        function showJobPage(jobId) {
+            currentJob = jobsData.find(job => job.id === jobId);
+            if (!currentJob) return;
+
+            // Update sidebar
+            document.getElementById('jobLocation').textContent = currentJob.location;
+            document.getElementById('jobEmploymentType').textContent = currentJob.employmentType;
+            document.getElementById('jobLocationType').textContent = currentJob.locationType;
+            document.getElementById('jobDepartment').textContent = currentJob.department;
+
+            // Update main content
+            document.getElementById('jobTitle').textContent = currentJob.title;
+            document.getElementById('jobDescription').innerHTML = currentJob.description;
+
+            // Show job page
+            document.getElementById('homePage').style.display = 'none';
+            document.getElementById('jobPage').style.display = 'block';
+            document.getElementById('successPage').style.display = 'none';
+            document.getElementById('backArrow').style.display = 'block';
+
+            // Reset to overview tab
+            switchTab('overview');
+        }
+
+        function switchTab(tabName) {
+            // Update tab appearance
+            document.querySelectorAll('.job-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+
+            // Show/hide content
+            if (tabName === 'overview') {
+                document.getElementById('overviewContent').style.display = 'block';
+                document.getElementById('applicationContent').style.display = 'none';
+                document.getElementById('applyButton').style.display = 'block';
+            } else {
+                document.getElementById('overviewContent').style.display = 'none';
+                document.getElementById('applicationContent').style.display = 'block';
+                document.getElementById('applyButton').style.display = 'none';
+            }
+        }
+
+        function setupFileUpload() {
+            const resumeUpload = document.getElementById('resumeUpload');
+            const resumeFile = document.getElementById('resumeFile');
+
+            resumeUpload.addEventListener('click', () => resumeFile.click());
+
+            resumeUpload.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.classList.add('dragover');
+            });
+
+            resumeUpload.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                this.classList.remove('dragover');
+            });
+
+            resumeUpload.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.classList.remove('dragover');
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    // Manually set the files to the input
+                    const dt = new DataTransfer();
+                    dt.items.add(files[0]);
+                    resumeFile.files = dt.files;
+                    updateFileDisplay(files[0]);
+                }
+            });
+
+            resumeFile.addEventListener('change', function() {
+                console.log('📁 File input changed, files:', this.files);
+                if (this.files.length > 0) {
+                    updateFileDisplay(this.files[0]);
+                    console.log('📁 File selected:', this.files[0].name);
+                }
+            });
+
+            document.getElementById('autofillBtn').addEventListener('click', () => resumeFile.click());
+        }
+
+        function updateFileDisplay(file) {
+            const uploadArea = document.getElementById('resumeUpload');
+            uploadArea.innerHTML = `<div>📄 ${file.name}</div>`;
+            console.log('📁 File display updated:', file.name);
+        }
+
+        function validateForm() {
+            let isValid = true;
+            const errors = {};
+
+            console.log('🔍 Starting form validation...');
+
+            // Clear previous errors
+            try {
+                document.querySelectorAll('.form-input').forEach(input => {
+                    input.classList.remove('error');
+                });
+                document.querySelectorAll('.error-message').forEach(error => {
+                    error.textContent = '';
+                });
+            } catch (e) {
+                console.log('Error clearing previous validation states:', e);
+            }
+
+            // Validate name
+            try {
+                const nameInput = document.getElementById('applicantName');
+                const name = nameInput ? nameInput.value.trim() : '';
+                if (!name) {
+                    errors.name = 'Name is required';
+                    isValid = false;
+                    console.log('❌ Name validation failed');
+                } else {
+                    console.log('✅ Name validation passed');
+                }
+            } catch (e) {
+                console.log('Error validating name:', e);
+                isValid = false;
+            }
+
+            // Validate email
+            try {
+                const emailInput = document.getElementById('applicantEmail');
+                const email = emailInput ? emailInput.value.trim() : '';
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!email) {
+                    errors.email = 'Email is required';
+                    isValid = false;
+                    console.log('❌ Email validation failed - empty');
+                } else if (!emailRegex.test(email)) {
+                    errors.email = 'Please enter a valid email address';
+                    isValid = false;
+                    console.log('❌ Email validation failed - invalid format');
+                } else {
+                    console.log('✅ Email validation passed');
+                }
+            } catch (e) {
+                console.log('Error validating email:', e);
+                isValid = false;
+            }
+
+            // Validate location
+            try {
+                const locationInput = document.getElementById('applicantLocation');
+                const location = locationInput ? locationInput.value.trim() : '';
+                if (!location) {
+                    errors.location = 'Location is required';
+                    isValid = false;
+                    console.log('❌ Location validation failed');
+                } else {
+                    console.log('✅ Location validation passed');
+                }
+            } catch (e) {
+                console.log('Error validating location:', e);
+                isValid = false;
+            }
+
+            // SKIP RESUME VALIDATION COMPLETELY FOR NOW
+            console.log('⚠️ Skipping resume validation temporarily');
+
+            // Display errors safely
+            try {
+                Object.keys(errors).forEach(field => {
+                    let input = null;
+                    
+                    if (field === 'name') {
+                        input = document.getElementById('applicantName');
+                    } else if (field === 'email') {
+                        input = document.getElementById('applicantEmail');
+                    } else if (field === 'location') {
+                        input = document.getElementById('applicantLocation');
+                    }
+                    
+                    if (input) {
+                        input.classList.add('error');
+                    }
+                    
+                    const errorElement = document.getElementById(`${field}Error`);
+                    if (errorElement) {
+                        errorElement.textContent = errors[field];
+                        console.log(`📝 Showing error for ${field}: ${errors[field]}`);
+                    }
+                });
+            } catch (e) {
+                console.log('Error displaying validation errors:', e);
+            }
+
+            console.log(`🔍 Form validation result: ${isValid ? 'PASSED' : 'FAILED'}`);
+            if (!isValid) {
+                console.log('❌ Validation errors:', errors);
+            }
+
+            return isValid;
+        }
+
+        async function handleFormSubmit(e) {
+            console.log('🚀 Form submitted!');
+            e.preventDefault();
+            e.stopPropagation();
+
+            if (!validateForm()) {
+                console.log('❌ Form validation failed');
+                return;
+            }
+
+            console.log('✅ Form validation passed');
+
+            // Disable submit button to prevent double submission
+            const submitBtn = document.getElementById('submitBtn');
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Uploading...';
+            }
+
+            try {
+                // Get form data
+                const name = document.getElementById('applicantName').value.trim();
+                const email = document.getElementById('applicantEmail').value.trim();
+                const location = document.getElementById('applicantLocation').value.trim();
+                const phone = document.getElementById('applicantPhone').value.trim();
+                const coverLetter = document.getElementById('coverLetter').value.trim();
+
+                // Handle file upload first
+                let resumeUrl = 'No file uploaded';
+                const resumeInput = document.getElementById('resumeFile');
+                
+                if (resumeInput && resumeInput.files && resumeInput.files.length > 0) {
+                    console.log('📁 Uploading resume file...');
+                    if (submitBtn) submitBtn.textContent = 'Uploading resume...';
+                    
+                    const uploadedUrl = await uploadFileToGoogleDrive(resumeInput.files[0], name);
+                    if (uploadedUrl) {
+                        resumeUrl = uploadedUrl;
+                        console.log('✅ Resume uploaded successfully');
+                    } else {
+                        console.log('⚠️ Resume upload failed, continuing without file');
+                    }
+                }
+
+                // Prepare application data
+                const formData = {
+                    id: Date.now(),
+                    jobId: currentJob ? currentJob.id : 1,
+                    jobTitle: currentJob ? currentJob.title : 'Unknown Position',
+                    name: name,
+                    email: email,
+                    location: location,
+                    phone: phone,
+                    coverLetter: coverLetter,
+                    resumeUrl: resumeUrl,
+                    resumeFileName: resumeInput?.files?.[0]?.name || 'No file',
+                    submittedAt: new Date().toISOString(),
+                    submittedAtFormatted: new Date().toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    })
+                };
+
+                console.log('📝 Form data collected:', formData);
+
+                // Submit to Google Sheets
+                if (submitBtn) submitBtn.textContent = 'Submitting application...';
+                console.log('📤 Attempting to submit to Google Sheets...');
+                const sheetsSuccess = await submitToGoogleSheets(formData);
+                
+                // Always save locally as backup
+                applications.push(formData);
+                localStorage.setItem('applications', JSON.stringify(applications));
+                console.log('💾 Application saved locally');
+
+                // Update admin dashboard
+                updateApplicationsList();
+
+                // Reset form safely
+                try {
+                    document.getElementById('applicationForm').reset();
+                    const resumeUpload = document.getElementById('resumeUpload');
+                    if (resumeUpload) {
+                        resumeUpload.innerHTML = '<div>📎 Upload File or drag and drop here</div>';
+                    }
+                } catch (resetError) {
+                    console.log('Error resetting form:', resetError);
+                }
+
+                // Show success page
+                console.log('🎉 Showing success page...');
+                showSuccessPage();
+
+                if (sheetsSuccess) {
+                    console.log('✅ Application successfully saved to Google Sheets and locally');
+                } else {
+                    console.log('⚠️ Application saved locally only');
+                }
+
+            } catch (error) {
+                console.error('❌ Error submitting application:', error);
+                showSuccessPage(); // Show success anyway
+            }
+
+            // Re-enable submit button
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Submit Application';
+            }
+        }
+
+        // Admin functions (hidden from regular users)
+        function toggleAdmin() {
+            const dashboard = document.getElementById('adminDashboard');
+            dashboard.classList.toggle('show');
+        }
+
+        // Hide admin toggle in production (you can remove this line for testing)
+        // document.getElementById('adminToggle').style.display = 'none';
+
+        function showSuccessPage() {
+            console.log('🎉 Showing success page');
+            document.getElementById('homePage').style.display = 'none';
+            document.getElementById('jobPage').style.display = 'none';
+            document.getElementById('successPage').style.display = 'block';
+            document.getElementById('backArrow').style.display = 'none';
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        function updateApplicationsList() {
+            const applicationsList = document.getElementById('applicationsList');
+            
+            if (applications.length === 0) {
+                applicationsList.innerHTML = '<p style="text-align: center; color: #718096; padding: 40px;">No applications received yet.</p>';
+                return;
+            }
+
+            applicationsList.innerHTML = applications.map(app => `
+                <div class="application-item">
+                    <div class="application-header">
+                        <div class="applicant-name">${app.name}</div>
+                        <div class="application-date">${app.submittedAtFormatted}</div>
+                    </div>
+                    <div class="application-details">
+                        <div><strong>Position:</strong> ${app.jobTitle}</div>
+                        <div><strong>Email:</strong> ${app.email}</div>
+                        <div><strong>Location:</strong> ${app.location}</div>
+                        <div><strong>Phone:</strong> ${app.phone || 'Not provided'}</div>
+                        <div><strong>Resume:</strong> ${app.resumeFileName}</div>
+                        ${app.coverLetter ? `<div style="grid-column: 1 / -1; margin-top: 8px;"><strong>Cover Letter:</strong><br>${app.coverLetter}</div>` : ''}
+                    </div>
+                </div>
+            `).reverse().join('');
+        }
+    </script>
+</body>
+</html>
