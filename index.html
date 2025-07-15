@@ -933,12 +933,12 @@
                 const formData = new FormData();
                 formData.append('file', file);
                 formData.append('upload_preset', CLOUDINARY_CONFIG.UPLOAD_PRESET);
-                // Remove folder and public_id - let Cloudinary handle it
+                formData.append('resource_type', 'raw'); // Specify raw for documents/PDFs
                 
                 console.log('📤 Uploading to Cloudinary...');
                 
                 const response = await fetch(
-                    `https://api.cloudinary.com/v1_1/${CLOUDINARY_CONFIG.CLOUD_NAME}/upload`,
+                    `https://api.cloudinary.com/v1_1/${CLOUDINARY_CONFIG.CLOUD_NAME}/raw/upload`, // Use /raw/upload for documents
                     {
                         method: 'POST',
                         body: formData
