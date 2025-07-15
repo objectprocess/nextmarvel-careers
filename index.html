@@ -797,9 +797,8 @@
             UPLOAD_PRESET: 'job_applications'
         };
 
-        // Google Sheets Configuration
+        // Google Sheets Configuration - UPDATED WITH YOUR WEB APP URL
         const GOOGLE_CONFIG = {
-            // Your Google Apps Script Web App URL
             WEB_APP_URL: 'https://script.google.com/macros/s/AKfycbw0A3ehCoReyX-xkT--YWe7kaFHjqGrLvfmiDQbYec6zem8bnl040_EexZxSjgTQLLd/exec'
         };
 
@@ -924,7 +923,7 @@
         let applications = JSON.parse(localStorage.getItem('applications')) || [];
         let currentJob = null;
 
-        // FIXED FILE UPLOAD TO CLOUDINARY
+        // FIXED FILE UPLOAD TO CLOUDINARY - CREATES MULTIPLE URL FORMATS
         async function uploadFileToCloudinary(file, applicantName) {
             try {
                 console.log('📤 Uploading file to Cloudinary:', file.name);
@@ -1447,25 +1446,25 @@
                     console.log('📁 No resume file found');
                 }
 
-                // Prepare application data with multiple URL formats
+                // Prepare application data with multiple URL formats - MATCHES YOUR SPREADSHEET
                 const formData = {
                     id: Date.now(),
                     jobId: currentJob ? currentJob.id : 1,
-                    jobTitle: currentJob ? currentJob.title : 'Unknown Position',
-                    name: name,
-                    email: email,
-                    location: location,
-                    phone: phone,
-                    coverLetter: coverLetter,
-                    resumeUrl: resumeUrl, // Primary download URL
-                    resumeUrlStandard: resumeUrlStandard, // Standard Cloudinary URL
-                    resumeUrlDownload: resumeUrlDownload, // Download URL
-                    resumeUrlViewer: resumeUrlViewer, // Google Viewer URL
-                    resumeFileName: resumeFileName,
+                    jobTitle: currentJob ? currentJob.title : 'Unknown Position', // Maps to "Position" column
+                    name: name,                                                     // Maps to "Full Name" column
+                    email: email,                                                   // Maps to "Email" column  
+                    location: location,                                             // Maps to "Location" column
+                    phone: phone,                                                   // Maps to "Phone" column
+                    coverLetter: coverLetter,                                       // Maps to "Cover Lett" column
+                    resumeFileName: resumeFileName,                                 // Maps to "Resume File Nam" column
+                    resumeUrl: resumeUrl,                                          // Primary download URL
+                    resumeUrlStandard: resumeUrlStandard,                          // Maps to "Resume Standard Li" column
+                    resumeUrlDownload: resumeUrlDownload,                          // Maps to "Resume Download Li" column  
+                    resumeUrlViewer: resumeUrlViewer,                              // Maps to "Resume Viewer Li" column
                     submittedAt: new Date().toISOString(),
-                    submittedAtFormatted: new Date().toLocaleDateString('en-US', {
+                    submittedAtFormatted: new Date().toLocaleDateString('en-US', {  // Maps to "Timestap" column
                         year: 'numeric',
-                        month: 'long',
+                        month: 'long', 
                         day: 'numeric',
                         hour: '2-digit',
                         minute: '2-digit'
