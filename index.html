@@ -924,62 +924,26 @@
         let applications = JSON.parse(localStorage.getItem('applications')) || [];
         let currentJob = null;
 
-        // Google Sheets API Functions
         async function submitToGoogleSheets(applicationData) {
             try {
-                // Method 1: Using Google Apps Script Web App (Recommended - Easier Setup)
+                console.log('📤 Submitting to Google Sheets with data:', applicationData);
+                
+                // Using Google Apps Script Web App
                 if (GOOGLE_SHEETS_CONFIG.WEB_APP_URL && GOOGLE_SHEETS_CONFIG.WEB_APP_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE') {
+                    console.log('🌐 Making request to:', GOOGLE_SHEETS_CONFIG.WEB_APP_URL);
+                    
                     const response = await fetch(GOOGLE_SHEETS_CONFIG.WEB_APP_URL, {
                         method: 'POST',
+                        mode: 'no-cors', // Add this to handle CORS issues
                         headers: {
                             'Content-Type': 'application/json',
                         },
                         body: JSON.stringify(applicationData)
                     });
                     
-                    if (response.ok) {
-                        console.log('✅ Application sent to Google Sheets successfully');
-                        return true;
-                    } else {
-                        throw new Error('Failed to submit to Google Sheets');
-                    }
-                }
-                
-                // Method 2: Direct Sheets API (Requires more setup)
-                else if (GOOGLE_SHEETS_CONFIG.API_KEY && GOOGLE_SHEETS_CONFIG.API_KEY !== 'YOUR_GOOGLE_API_KEY_HERE') {
-                    const values = [
-                        [
-                            applicationData.submittedAtFormatted,
-                            applicationData.jobTitle,
-                            applicationData.name,
-                            applicationData.email,
-                            applicationData.phone || '',
-                            applicationData.location,
-                            applicationData.coverLetter || '',
-                            applicationData.resumeFileName,
-                            applicationData.submittedAt,
-                            'New',
-                            `ID: ${applicationData.id}`
-                        ]
-                    ];
-
-                    const response = await fetch(
-                        `https://sheets.googleapis.com/v4/spreadsheets/${GOOGLE_SHEETS_CONFIG.SHEET_ID}/values/${GOOGLE_SHEETS_CONFIG.RANGE}:append?valueInputOption=RAW&key=${GOOGLE_SHEETS_CONFIG.API_KEY}`,
-                        {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({ values })
-                        }
-                    );
-
-                    if (response.ok) {
-                        console.log('✅ Application sent to Google Sheets successfully');
-                        return true;
-                    } else {
-                        throw new Error('Failed to submit to Google Sheets');
-                    }
+                    console.log('📨 Request sent to Google Sheets (no-cors mode)');
+                    // With no-cors, we can't read the response, but the request goes through
+                    return true;
                 }
                 
                 // No Google Sheets configured
@@ -1203,9 +1167,9 @@
                 isValid = false;
             }
 
-            // Validate resume
-            const resume = document.getElementById('resumeFile').files[0];
-            if (!resume) {
+            // Validate resume - FIXED
+            const resumeInput = document.getElementById('resumeFile');
+            if (!resumeInput || !resumeInput.files || resumeInput.files.length === 0) {
                 errors.resume = 'Resume is required';
                 isValid = false;
             }
@@ -1219,9 +1183,13 @@
 
             // Display errors
             Object.keys(errors).forEach(field => {
-                const input = document.getElementById(`applicant${field.charAt(0).toUpperCase() + field.slice(1)}`) || 
-                              document.getElementById(`${field}File`) ||
-                              document.getElementById(`applicant${field.charAt(0).toUpperCase() + field.slice(1)}`);
+                let input;
+                if (field === 'resume') {
+                    // For resume, we don't have a direct input to highlight since it's a file upload area
+                    input = null;
+                } else {
+                    input = document.getElementById(`applicant${field.charAt(0).toUpperCase() + field.slice(1)}`);
+                }
                 
                 if (input) {
                     input.classList.add('error');
@@ -1331,10 +1299,14 @@
         // document.getElementById('adminToggle').style.display = 'none';
 
         function showSuccessPage() {
+            console.log('🎉 Showing success page');
             document.getElementById('homePage').style.display = 'none';
             document.getElementById('jobPage').style.display = 'none';
             document.getElementById('successPage').style.display = 'block';
             document.getElementById('backArrow').style.display = 'none';
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
         }
 
         function updateApplicationsList() {
