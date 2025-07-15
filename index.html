@@ -1326,6 +1326,20 @@
             e.preventDefault();
             e.stopPropagation();
 
+            // FIRST: Check file immediately before any other processing
+            const resumeInput = document.getElementById('resumeFile');
+            console.log('🔍 IMMEDIATE FILE CHECK:');
+            console.log('🔍 Resume input element:', resumeInput);
+            console.log('🔍 Resume input files:', resumeInput ? resumeInput.files : 'input not found');
+            console.log('🔍 Files length:', resumeInput?.files?.length);
+            if (resumeInput?.files?.length > 0) {
+                console.log('🔍 File details:', {
+                    name: resumeInput.files[0].name,
+                    size: resumeInput.files[0].size,
+                    type: resumeInput.files[0].type
+                });
+            }
+
             if (!validateForm()) {
                 console.log('❌ Form validation failed');
                 return;
@@ -1348,26 +1362,45 @@
                 const phone = document.getElementById('applicantPhone').value.trim();
                 const coverLetter = document.getElementById('coverLetter').value.trim();
 
-                // Handle file upload first
+                // Handle file upload - MOVED EARLIER AND ENHANCED
                 let resumeUrl = 'No file uploaded';
                 let resumeFileName = 'No file';
-                const resumeInput = document.getElementById('resumeFile');
+                
+                console.log('🔍 Checking for resume file AGAIN...');
+                console.log('🔍 Resume input element:', resumeInput);
+                console.log('🔍 Resume input files:', resumeInput ? resumeInput.files : 'input not found');
+                console.log('🔍 Files length:', resumeInput?.files?.length);
                 
                 if (resumeInput && resumeInput.files && resumeInput.files.length > 0) {
                     console.log('📁 Processing resume file...');
+                    console.log('📁 File details:', {
+                        name: resumeInput.files[0].name,
+                        size: resumeInput.files[0].size,
+                        type: resumeInput.files[0].type
+                    });
+                    
                     if (submitBtn) submitBtn.textContent = 'Uploading resume...';
                     
                     resumeFileName = resumeInput.files[0].name;
-                    const uploadedUrl = await uploadFileToGoogleDrive(resumeInput.files[0], name);
-                    if (uploadedUrl) {
-                        resumeUrl = uploadedUrl;
-                        console.log('✅ Resume uploaded successfully');
+                    console.log('📤 About to upload to Cloudinary...');
+                    const uploadResult = await uploadFileToCloudinary(resumeInput.files[0], name);
+                    if (uploadResult && uploadResult.url) {
+                        resumeUrl = uploadResult.url;
+                        console.log('✅ Resume uploaded successfully to Cloudinary:', resumeUrl);
                     } else {
-                        console.log('⚠️ Resume upload failed, continuing without file URL');
-                        resumeUrl = 'Upload failed - file may still be processed';
+                        console.log('⚠️ Resume upload failed');
+                        resumeUrl = 'Upload failed';
                     }
                 } else {
                     console.log('📁 No resume file found');
+                    console.log('📁 Detailed analysis:');
+                    console.log('   - Resume input exists:', !!resumeInput);
+                    console.log('   - Files property exists:', !!resumeInput?.files);
+                    console.log('   - Files count:', resumeInput?.files?.length || 0);
+                    
+                    // Try to get the file from the display area
+                    const uploadArea = document.getElementById('resumeUpload');
+                    console.log('📁 Upload area content:', uploadArea?.innerHTML);
                 }
 
                 // Prepare application data
