@@ -1004,8 +1004,14 @@
         function setupEventListeners() {
             // Navigation
             document.getElementById('backArrow').addEventListener('click', showHomePage);
-            document.getElementById('logoLink').addEventListener('click', showHomePage);
-            document.getElementById('backHomeBtn').addEventListener('click', showHomePage);
+            document.getElementById('logoLink').addEventListener('click', function(e) {
+                e.preventDefault();
+                showHomePage();
+            });
+            document.getElementById('backHomeBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                showHomePage();
+            });
 
             // Filters
             document.getElementById('departmentFilter').addEventListener('change', filterJobs);
@@ -1026,8 +1032,14 @@
             // File uploads
             setupFileUpload();
 
-            // Form submission
-            document.getElementById('applicationForm').addEventListener('submit', handleFormSubmit);
+            // Form submission - FIXED
+            const form = document.getElementById('applicationForm');
+            if (form) {
+                form.addEventListener('submit', handleFormSubmit);
+                console.log('✅ Form event listener attached');
+            } else {
+                console.error('❌ Application form not found!');
+            }
         }
 
         function renderJobs(filter = {}) {
@@ -1225,11 +1237,15 @@
         }
 
         async function handleFormSubmit(e) {
+            console.log('🚀 Form submitted!');
             e.preventDefault();
 
             if (!validateForm()) {
+                console.log('❌ Form validation failed');
                 return;
             }
+
+            console.log('✅ Form validation passed');
 
             // Disable submit button to prevent double submission
             const submitBtn = document.getElementById('submitBtn');
@@ -1239,14 +1255,14 @@
             // Collect form data
             const formData = {
                 id: Date.now(),
-                jobId: currentJob.id,
-                jobTitle: currentJob.title,
+                jobId: currentJob ? currentJob.id : 1,
+                jobTitle: currentJob ? currentJob.title : 'Unknown Position',
                 name: document.getElementById('applicantName').value.trim(),
                 email: document.getElementById('applicantEmail').value.trim(),
                 location: document.getElementById('applicantLocation').value.trim(),
                 phone: document.getElementById('applicantPhone').value.trim(),
                 coverLetter: document.getElementById('coverLetter').value.trim(),
-                resumeFileName: document.getElementById('resumeFile').files[0]?.name || '',
+                resumeFileName: document.getElementById('resumeFile').files[0]?.name || 'No file uploaded',
                 submittedAt: new Date().toISOString(),
                 submittedAtFormatted: new Date().toLocaleDateString('en-US', {
                     year: 'numeric',
@@ -1257,20 +1273,27 @@
                 })
             };
 
+            console.log('📝 Form data collected:', formData);
+
             try {
                 // Try to submit to Google Sheets first
+                console.log('📤 Attempting to submit to Google Sheets...');
                 const sheetsSuccess = await submitToGoogleSheets(formData);
                 
                 // Always save locally as backup
                 applications.push(formData);
                 localStorage.setItem('applications', JSON.stringify(applications));
+                console.log('💾 Application saved locally');
 
                 // Update admin dashboard (hidden from user)
                 updateApplicationsList();
 
                 // Reset form
                 document.getElementById('applicationForm').reset();
-                document.getElementById('resumeUpload').innerHTML = '<div>📎 Upload File or drag and drop here</div>';
+                const resumeUpload = document.getElementById('resumeUpload');
+                if (resumeUpload) {
+                    resumeUpload.innerHTML = '<div>📎 Upload File or drag and drop here</div>';
+                }
 
                 // Show success page
                 showSuccessPage();
