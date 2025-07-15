@@ -933,8 +933,7 @@
                 const formData = new FormData();
                 formData.append('file', file);
                 formData.append('upload_preset', CLOUDINARY_CONFIG.UPLOAD_PRESET);
-                formData.append('folder', 'resumes');
-                formData.append('public_id', `${applicantName.replace(/\s+/g, '_')}_${Date.now()}`);
+                // Remove folder and public_id - let Cloudinary handle it
                 
                 console.log('📤 Uploading to Cloudinary...');
                 
